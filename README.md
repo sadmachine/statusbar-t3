@@ -1,1 +1,1 @@
-# statusbar-t3
+# Ncurses Status Bar - Tutorial 2 
