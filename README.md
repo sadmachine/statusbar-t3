@@ -1,1 +1,1 @@
-# Ncurses Status Bar - Tutorial 2 
+# Ncurses Status Bar - Tutorial 3 
