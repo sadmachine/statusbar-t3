@@ -4,14 +4,46 @@
 
 class StatusBarPart
 {
+    // Object vars
     std::string _text;
     attr_t _attributes;
+    int _width;
+    int _padding;
+
+    // Static vars
+    static int default_width;
+    static int default_padding;
 
 public:
+    static const int WIDTH_FIT = 0;
+    static const int WIDTH_GROW = -1;
+
+    static int getDefaultWidth()
+    {
+        return default_width;
+    }
+
+    static void setDefaultWidth(int width)
+    {
+        default_width = width;
+    }
+
+    static int getDefaultPadding()
+    {
+        return default_padding;
+    }
+
+    static void setDefaultPadding(int padding)
+    {
+        default_padding = padding;
+    }
+
     StatusBarPart()
     {
         _text = "";
         _attributes = 0;
+        _width = StatusBarPart::default_width;
+        _padding = StatusBarPart::default_padding;
     }
 
     std::string getText()
@@ -37,4 +69,27 @@ public:
     {
         _attributes = attributes;
     }
+
+    int getWidth()
+    {
+        return _width;
+    }
+
+    void setWidth(int width)
+    {
+        _width = width;
+    }
+
+    int getPadding()
+    {
+        return _padding;
+    }
+
+    void setPadding(int padding)
+    {
+        _padding = padding;
+    }
 };
+
+int StatusBarPart::default_width = StatusBarPart::WIDTH_FIT;
+int StatusBarPart::default_padding = 1;
