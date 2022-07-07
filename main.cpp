@@ -21,10 +21,17 @@ int main()
     init_pair(3, COLOR_WHITE, COLOR_RED);
 
     StatusBar statusbar(3);
-    statusbar.setText(0, "NORMAL", COLOR_PAIR(1));
-    statusbar.setText(1, "main.cpp", COLOR_PAIR(2));
-    statusbar.setPart(1, StatusBarPart::WIDTH_GROW, 1);
-    statusbar.setText(2, "Cool Text", COLOR_PAIR(3));
+
+    statusbar[0]
+        ->setText("NORMAL", COLOR_PAIR(1));
+
+    statusbar[1]
+        ->setText("main.cpp", COLOR_PAIR(2))
+        ->setWidth(StatusBarPart::WIDTH_GROW);
+
+    statusbar[2]
+        ->setText("Cool Text", COLOR_PAIR(3));
+
     statusbar.draw();
 
     // attron(COLOR_PAIR(1));
