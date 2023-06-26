@@ -51,14 +51,14 @@ public:
         return _text;
     }
 
-    StatusBarPart *setText(std::string text, attr_t attributes = -1)
+    StatusBarPart &setText(std::string text, attr_t attributes = -1)
     {
         _text = text;
         if (attributes != -1)
         {
             _attributes = attributes;
         }
-        return this;
+        return *this;
     }
 
     attr_t getAttributes()
@@ -66,10 +66,10 @@ public:
         return _attributes;
     }
 
-    StatusBarPart *setAttributes(attr_t attributes)
+    StatusBarPart &setAttributes(attr_t attributes)
     {
         _attributes = attributes;
-        return this;
+        return *this;
     }
 
     int getWidth()
@@ -77,10 +77,10 @@ public:
         return _width;
     }
 
-    StatusBarPart *setWidth(int width)
+    StatusBarPart &setWidth(int width)
     {
         _width = width;
-        return this;
+        return *this;
     }
 
     int getPadding()
@@ -88,10 +88,10 @@ public:
         return _padding;
     }
 
-    StatusBarPart *setPadding(int padding)
+    StatusBarPart &setPadding(int padding)
     {
         _padding = padding;
-        return this;
+        return *this;
     }
 };
 

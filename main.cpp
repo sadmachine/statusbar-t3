@@ -23,14 +23,14 @@ int main()
     StatusBar statusbar(3);
 
     statusbar[0]
-        ->setText("NORMAL", COLOR_PAIR(1));
+        .setText("NORMAL", COLOR_PAIR(1));
 
     statusbar[1]
-        ->setText("main.cpp", COLOR_PAIR(2))
-        ->setWidth(StatusBarPart::WIDTH_GROW);
+        .setText("main.cpp", COLOR_PAIR(2))
+        .setWidth(StatusBarPart::WIDTH_GROW);
 
     statusbar[2]
-        ->setText("Cool Text", COLOR_PAIR(3));
+        .setText("Cool Text", COLOR_PAIR(3));
 
     statusbar.draw();
 

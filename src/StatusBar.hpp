@@ -7,7 +7,7 @@
 class StatusBar
 {
     WINDOW *_parent;
-    std::vector<StatusBarPart *> _parts;
+    std::vector<StatusBarPart> _parts;
     std::vector<int> _draw_widths;
 
     void calculateDrawWidths()
@@ -16,11 +16,11 @@ class StatusBar
         int remaining_width = _parent->_maxx;
         for (int i = 0; i < _parts.size(); i++)
         {
-            StatusBarPart *part = _parts[i];
-            switch (part->getWidth())
+            StatusBarPart part = _parts[i];
+            switch (part.getWidth())
             {
             case StatusBarPart::WIDTH_FIT:
-                _draw_widths[i] = part->getText().length() + (part->getPadding() * 2);
+                _draw_widths[i] = part.getText().length() + (part.getPadding() * 2);
                 remaining_width -= _draw_widths[i];
                 // Width should match content width + padding
                 break;
@@ -30,7 +30,7 @@ class StatusBar
                 break;
             default:
                 // Use defined fixed width + padding
-                _draw_widths[i] = part->getWidth() + (part->getPadding() * 2);
+                _draw_widths[i] = part.getWidth() + (part.getPadding() * 2);
                 remaining_width -= _draw_widths[i];
                 break;
             }
@@ -46,18 +46,18 @@ class StatusBar
 
     void drawPart(int part_num)
     {
-        StatusBarPart *part = _parts[part_num];
+        StatusBarPart part = _parts[part_num];
 
-        attron(part->getAttributes());
+        attron(part.getAttributes());
         drawPadding(part_num);
         drawText(part_num);
         drawPadding(part_num);
-        attroff(part->getAttributes());
+        attroff(part.getAttributes());
     }
 
     void drawPadding(int part_num)
     {
-        int padding = _parts[part_num]->getPadding();
+        int padding = _parts[part_num].getPadding();
         for (int i = 0; i < padding; i++)
         {
             waddch(_parent, ' ');
@@ -66,8 +66,8 @@ class StatusBar
 
     void drawText(int part_num)
     {
-        int width_no_padding = _draw_widths[part_num] - (_parts[part_num]->getPadding() * 2);
-        std::string text = _parts[part_num]->getText();
+        int width_no_padding = _draw_widths[part_num] - (_parts[part_num].getPadding() * 2);
+        std::string text = _parts[part_num].getText();
         for (int i = 0; i < width_no_padding; i++)
         {
             if (i >= text.length())
@@ -85,42 +85,33 @@ public:
     StatusBar(int num_parts, WINDOW *parent = stdscr)
     {
         _parent = parent;
-        _parts = std::vector<StatusBarPart *>(num_parts);
+        _parts = std::vector<StatusBarPart>(num_parts);
         _draw_widths = std::vector<int>(num_parts);
         for (int i = 0; i < num_parts; i++)
         {
-            _parts[i] = new StatusBarPart();
+            _parts[i] = StatusBarPart();
         }
     }
 
-    ~StatusBar()
-    {
-        for (auto part : _parts)
-        {
-            delete part;
-        }
-        _parts.clear();
-    }
-
-    StatusBarPart *operator[](int part_num)
+    StatusBarPart &operator[](int part_num)
     {
         return _parts[part_num];
     }
 
-    StatusBarPart *part(int part_num)
+    StatusBarPart &part(int part_num)
     {
         return _parts[part_num];
     }
 
     void setPart(int part_num, int width, int padding)
     {
-        _parts[part_num]->setWidth(width);
-        _parts[part_num]->setPadding(padding);
+        _parts[part_num].setWidth(width);
+        _parts[part_num].setPadding(padding);
     }
 
     void setText(int part_num, std::string msg, attr_t attributes = -1)
     {
-        _parts[part_num]->setText(msg, attributes);
+        _parts[part_num].setText(msg, attributes);
     }
 
     void draw()
